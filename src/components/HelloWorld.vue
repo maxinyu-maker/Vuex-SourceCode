@@ -2,7 +2,7 @@
   <div class="hello">
     <h3>state:{{ count }}</h3>
     <h3>getter:{{ doubleCount }}:{{ amplifyCount }}</h3>
-    <h3>module:{{ number }}:{{ value }}</h3>
+    <h3>module:(a:{{ number }};c:{{ number1 }}):b:{{ value }}</h3>
     <!-- <h3>{{ name }}</h3> -->
       {{$store.state.count}}
       {{$store.getters.doubleCount}}
@@ -13,6 +13,10 @@
     action
     <button @click="incrementIfOdd">incrementIfOdd</button>
     <button @click="incrementAsync">1slateradd</button>
+    modules
+    <button @click="a">a+</button>
+    <button @click="b">b+</button>
+    <button @click="c">c+</button>
   </div>
 </template>
 
@@ -30,13 +34,13 @@ export default {
     const store = useStore();
     const count = computed(() => store.state.count);
     const number = computed(() => store.state.a.number);
+    const number1 = computed(() => store.state.a.c.number1);
     const value = computed(() => store.state.b.value);
     const doubleCount = computed(() => store.getters.doubleCount);
     const amplifyCount = computed(() => store.getters.amplifyCount(5));
 
     const increment = ()=>{
       store.commit('increment', 1)
-      store.commit('inNumber', 1)
     }
     const decrement = ()=>{
       store.commit('decrement', 1)
@@ -47,10 +51,20 @@ export default {
     const incrementAsync = ()=>{
       store.dispatch('incrementAsync',10)
     }
+    const a = ()=>{
+      store.commit('a/increment',1)
+    }
+        const b = ()=>{
+      store.commit('inValue',1)
+    }
+        const c = ()=>{
+      store.commit('a/c/increment',1)
+    }
 
     return {
       count,
       number,
+      number1,
       value,
       doubleCount,
       amplifyCount,
@@ -58,6 +72,9 @@ export default {
       decrement,
       incrementIfOdd,
       incrementAsync,
+      a,
+      b,
+      c,
     }
 
   }

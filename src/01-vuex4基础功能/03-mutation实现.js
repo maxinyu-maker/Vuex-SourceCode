@@ -41,6 +41,7 @@ class Store {
     }
     commit = (type, payload) => { //只能这么写（本质是通过bind进行了转义）
         this._mutations[type](payload)
+        console.log(this, type, payload)
     }
     dispatch = (type, payload) => {
         this._actions[type](payload)
